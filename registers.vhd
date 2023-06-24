@@ -1,37 +1,37 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
-use IEEE.STD_LOGIC_SIGNED.ALL;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+USE IEEE.STD_LOGIC_SIGNED.ALL;
 
-Entity Registers is port(
-	Clk: in std_logic;
-    Reset: in std_logic;
-    Wr: in std_logic;
-    Data_wr: in std_logic_vector(31 downto 0);
-    Reg1_rd: in std_logic_vector(4 downto 0);
-    Reg2_rd: in std_logic_vector(4 downto 0);
-    Reg_wr: in std_logic_vector(4 downto 0);
-    Data1_rd: out std_logic_vector(31 downto 0);
-    Data2_rd: out std_logic_vector(31 downto 0)
+ENTITY Registers IS PORT (
+	Clk : IN STD_LOGIC;
+	Reset : IN STD_LOGIC;
+	Wr : IN STD_LOGIC;
+	Data_wr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+	Reg1_rd : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+	Reg2_rd : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+	Reg_wr : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+	Data1_rd : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+	Data2_rd : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 );
-end Registers;
+END Registers;
 
-Architecture reg_arq of Registers is
-	Type MEM is array(0 to 31) of std_logic_vector(31 downto 0);
-	signal Regs: MEM;
-begin
-	process(Clk,Reset) begin
-		if(Reset='1') then
-			Regs<=(others=>x"00000000");
-		elsif (Falling_Edge(clk) and wr = '1' and not (reg_wr="00000")) then
-				Regs(to_integer(unsigned(Reg_wr))) <= Data_wr;
-		end if;
-	end process;
+ARCHITECTURE reg_arq OF Registers IS
+	TYPE MEM IS ARRAY(0 TO 31) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
+	SIGNAL Regs : MEM;
+BEGIN
+	PROCESS (Clk, Reset) BEGIN
+		IF (Reset = '1') THEN
+			Regs <= (OTHERS => x"00000000");
+		ELSIF (Falling_Edge(clk) AND wr = '1' AND NOT (reg_wr = "00000")) THEN
+			Regs(to_integer(unsigned(Reg_wr))) <= Data_wr;
+		END IF;
+	END PROCESS;
 
-	process (reg1_rd, reg2_rd, Regs)
-	begin
+	PROCESS (reg1_rd, reg2_rd, Regs)
+	BEGIN
 		Data1_rd <= Regs(to_integer(unsigned(reg1_rd)));
 		Data2_rd <= Regs(to_integer(unsigned(reg2_rd)));
-	end process;
+	END PROCESS;
 
-end reg_arq;
+END reg_arq;

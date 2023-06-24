@@ -1,50 +1,50 @@
- library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
-use IEEE.STD_LOGIC_SIGNED.ALL;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+USE IEEE.STD_LOGIC_SIGNED.ALL;
 
-Entity ALU is port(
-	control: IN std_logic_vector(2 downto 0);
-   	A:		 IN std_logic_vector(31 downto 0);
-    B:		 IN std_logic_vector(31 downto 0);
-    result:  OUT std_logic_vector(31 downto 0);
-    zero:    OUT std_logic);
-End ALU;
+ENTITY ALU IS PORT (
+    control : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+    A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    result : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    zero : OUT STD_LOGIC);
+END ALU;
 
-Architecture ALU32 of ALU is
-begin
-	process(control)
-    begin
-    	case control is
-        	when "011" => -- and
-            	result <= A and B;
-            when "001" => -- or
-            	result <= A or B;
-            when "010" => -- sum
-            	result <= A + B;
+ARCHITECTURE ALU32 OF ALU IS
+BEGIN
+    PROCESS (control)
+    BEGIN
+        CASE control IS
+            WHEN "011" => -- and
+                result <= A AND B;
+            WHEN "001" => -- or
+                result <= A OR B;
+            WHEN "010" => -- sum
+                result <= A + B;
                 --std_logic_vector(signed(A) + signed(B));
-            when "110" => -- sub
-            	result <=  A - B;
+            WHEN "110" => -- sub
+                result <= A - B;
                 --std_logic_vector(signed(A) - signed(B));
-            when "100" => -- sll 16
-            	result <= B(15 downto 0) & x"0000";
-            when "111" => -- a<b
-            	if (A < B) then
-                  	result <= x"00000001";
-                else
-                	result <= x"00000000";
-                end if;
-            when others => -- etc
-            	result <= x"00000000";
-       	end case;
-    end process;
+            WHEN "100" => -- sll 16
+                result <= B(15 DOWNTO 0) & x"0000";
+            WHEN "111" => -- a<b
+                IF (A < B) THEN
+                    result <= x"00000001";
+                ELSE
+                    result <= x"00000000";
+                END IF;
+            WHEN OTHERS => -- etc
+                result <= x"00000000";
+        END CASE;
+    END PROCESS;
 
-    process(result)
-    begin
-    	if(result = "00000000000000000000000000000000") then
-        	zero <= '1';
-        else
-        	zero <= '0';
-        end if;
-    end process;
-end;
+    PROCESS (result)
+    BEGIN
+        IF (result = "00000000000000000000000000000000") THEN
+            zero <= '1';
+        ELSE
+            zero <= '0';
+        END IF;
+    END PROCESS;
+END;
