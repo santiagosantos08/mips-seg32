@@ -34,8 +34,6 @@ begin
                 else
                 	result <= x"00000000";
                 end if;
-
-
             when others => -- etc
             	result <= x"00000000";
        	end case;
