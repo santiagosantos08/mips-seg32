@@ -300,37 +300,37 @@ begin
 	--proceso de alu control
 	AluControl: process(EXE_SignExt(5 downto 0), EXE_AluOp)
 	begin
-	case(EXE_AluOp) is
-		when "001" => --Tipo R
-			case (EXE_SignExt(5 downto 0)) is
-				when "100000"=>  	--SUM
-					EXE_AluControl <= "010";
-				when "100010" => 	--SUB
-					EXE_AluControl <= "110";
-				when "100100" =>	 -- AND
-					EXE_AluControl <= "011";
-				when "100101" =>	 -- OR
-					EXE_AluControl <= "001";
-				when "101010" =>	 -- SLT
-					EXE_AluControl <= "111";
-				when others =>
-					EXE_AluControl <= "000";
-			end case;
-		when "011" =>  --BEQ 110
-			EXE_AluControl <= "110"; --resta para ver si da 0
-		when "010" =>  --MEM 010
-			EXE_AluControl <= "010"; --suma para la direcc
-		when "110" =>  --LUI
-			EXE_AluControl <= "100"; --hace shift para cargar esa mitad
-		when "111" =>  --ADDIMMEDIATE
-			EXE_AluControl <= "010";
-		when "101" =>  --ANDIMMEDIATE
-			EXE_AluControl <= "011";
-		when "100" =>  --ORIMMEDIATE
-			EXE_AluControl <= "001";
-		when others =>
-			EXE_AluControl <= "000";
-	end case;
+		case(EXE_AluOp) is
+			when "001" => --Tipo R
+				case (EXE_SignExt(5 downto 0)) is
+					when "100000"=>  	--SUM
+						EXE_AluControl <= "010";
+					when "100010" => 	--SUB
+						EXE_AluControl <= "110";
+					when "100100" =>	 -- AND
+						EXE_AluControl <= "011";
+					when "100101" =>	 -- OR
+						EXE_AluControl <= "001";
+					when "101010" =>	 -- SLT
+						EXE_AluControl <= "111";
+					when others =>
+						EXE_AluControl <= "000";
+				end case;
+			when "011" =>  --BEQ 110
+				EXE_AluControl <= "110"; --resta para ver si da 0
+			when "010" =>  --MEM 010
+				EXE_AluControl <= "010"; --suma para la direcc
+			when "110" =>  --LUI
+				EXE_AluControl <= "100"; --hace shift para cargar esa mitad
+			when "111" =>  --ADDIMMEDIATE
+				EXE_AluControl <= "010";
+			when "101" =>  --ANDIMMEDIATE
+				EXE_AluControl <= "011";
+			when "100" =>  --ORIMMEDIATE
+				EXE_AluControl <= "001";
+			when others =>
+				EXE_AluControl <= "000";
+		end case;
 	end process;
 --------------------------------------------------------------------------------
 --Segmentacion EXE/MEM
@@ -380,7 +380,7 @@ begin
 	MEM_PcSrc <= (MEM_BranchEquals and MEM_Zero);
 --------------------------------------------------------------------------------
 --Segmentacion MEM/WB
-    SegmentacionMEMWB:process (clock,rst)
+	SegmentacionMEMWB:process (clock,rst)
 	begin
 		if (Reset = '1') then
 			MEMWB_RegWrite <= '0';
