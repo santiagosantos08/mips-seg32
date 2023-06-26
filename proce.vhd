@@ -273,7 +273,7 @@ begin
 --------------------------------------------------------------------------------
 --Etapa EXE
 	--mapeo alu
-    AluInst: Alu PORT MAP(
+    	AluInst: Alu PORT MAP(
 		a => EXE_DataReg1,
 		b => EXE_AluMux,
 		control => EXE_AluControl,
@@ -358,7 +358,7 @@ begin
 			EXEMEM_Zero <= EXE_Zero;
 			EXEMEM_Result <=EXE_Result;
 			EXEMEM_DataReg2 <= EXE_DataReg2;
-			end if;
+		end if;
 	end process;
 --------------------------------------------------------------------------------
 --Etapa MEM
